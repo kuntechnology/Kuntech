@@ -1,0 +1,2324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="安恒信息金融行业渗透测试服务方案 - 专业安全合规检测、AI驱动自动化渗透测试、丰富的金融行业案例">
+    <title>安恒信息 | 金融行业渗透测试服务方案</title>
+    <style>
+        /* ========== CSS Variables ========== */
+        :root {
+            --color-primary: #003F88;
+            --color-primary-dark: #002654;
+            --color-primary-light: #1565C0;
+            --color-accent: #D93025;
+            --color-accent-light: #EA580C;
+            --color-bg: #F0F4F8;
+            --color-surface: #FFFFFF;
+            --color-surface-alt: #F8FAFC;
+            --color-text: #1A202C;
+            --color-text-secondary: #4A5568;
+            --color-text-muted: #718096;
+            --color-border: #E2E8F0;
+            --color-success: #16A34A;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --max-width: 1280px;
+            --header-height: 70px;
+        }
+
+        /* ========== Reset & Base ========== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--header-height);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+            color: var(--color-text);
+            background: var(--color-bg);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section { position: relative; }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(0, 63, 136, 0.08);
+            color: var(--color-primary);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .section-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--color-accent);
+        }
+
+        .section-title {
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 800;
+            color: var(--color-text);
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            max-width: 700px;
+            line-height: 1.8;
+        }
+
+        /* ========== Header ========== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+            transition: box-shadow 0.3s;
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            height: 100%;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 900;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(0, 63, 136, 0.3);
+            flex-shrink: 0;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        .logo-en {
+            font-size: 10px;
+            color: var(--color-text-muted);
+            letter-spacing: 1px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-link:hover { color: var(--color-primary); }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-accent);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after { width: 100%; }
+
+        .nav-cta {
+            padding: 8px 20px;
+            background: var(--color-primary);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 63, 136, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--color-text);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ========== Hero ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            padding-top: var(--header-height);
+            background:
+                linear-gradient(90deg, rgba(0,26,58,0.92) 0%, rgba(0,26,58,0.78) 40%, rgba(0,63,136,0.55) 100%),
+                url('hero-bg.jpg') center/cover no-repeat;
+            background-color: #001a3a;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(217, 48, 37, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(21, 101, 192, 0.2) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 760px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            font-size: 14px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ADE80;
+            box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 .accent {
+            background: linear-gradient(90deg, #FF6B6B, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: clamp(15px, 2vw, 18px);
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 36px;
+            max-width: 600px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--color-accent);
+            color: #fff;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(217, 48, 37, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #B71C1C;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(217, 48, 37, 0.4);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 56px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-stat-num {
+            font-size: clamp(24px, 3vw, 36px);
+            font-weight: 800;
+            color: #FFD700;
+        }
+
+        .hero-stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 4px;
+        }
+
+        /* ========== About Section ========== */
+        .about {
+            padding: 100px 0;
+            background: var(--color-surface);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-card {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .about-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .about-card p {
+            font-size: 15px;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .about-features {
+            display: grid;
+            gap: 16px;
+            position: relative;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .about-feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        .about-content .section-title {
+            margin-bottom: 24px;
+        }
+
+        .about-content p {
+            color: var(--color-text-secondary);
+            line-height: 1.9;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .about-credentials {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .credential-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--color-surface-alt);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
+        }
+
+        .credential-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(0, 63, 136, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .credential-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-text);
+            line-height: 1.4;
+        }
+
+        /* ========== Service Plan Section ========== */
+        .services {
+            padding: 100px 0;
+            background: var(--color-bg);
+        }
+
+        .services-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .services-header .section-tag { margin-bottom: 16px; }
+        .services-header .section-subtitle { margin: 0 auto; }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--color-primary-light);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--color-primary), var(--color-primary-light));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover::before { opacity: 1; }
+
+        .service-num {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--color-bg);
+            line-height: 1;
+        }
+
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .service-icon.bg-1 { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); }
+        .service-icon.bg-2 { background: linear-gradient(135deg, #F3E5F5, #E1BEE7); }
+        .service-icon.bg-3 { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); }
+        .service-icon.bg-4 { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
+
+        .service-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+        }
+
+        .service-card > p {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .service-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .service-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .service-list li::before {
+            content: '✓';
+            color: var(--color-primary);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .service-output {
+            margin-top: 16px;
+            padding: 10px 14px;
+            background: var(--color-surface-alt);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--color-text-muted);
+            border-left: 3px solid var(--color-accent);
+        }
+
+        /* Methodology Section */
+        .methodology {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .methodology-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .methodology-col h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .methodology-col h4 .icon-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .method-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .method-item:last-child { border-bottom: none; }
+
+        .method-item h5 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--color-text);
+        }
+
+        .method-item p {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ========== Advantages Section ========== */
+        .advantages {
+            padding: 100px 0;
+            background: var(--color-surface);
+        }
+
+        .advantages-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .advantages-header .section-subtitle { margin: 0 auto; }
+
+        .advantage-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .advantage-card {
+            padding: 32px 24px;
+            border-radius: var(--radius-md);
+            background: var(--color-surface-alt);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .advantage-card:hover {
+            background: var(--color-surface);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            border-color: var(--color-primary-light);
+        }
+
+        .advantage-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            background: linear-gradient(135deg, rgba(0, 63, 136, 0.1), rgba(21, 101, 192, 0.1));
+        }
+
+        .advantage-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .advantage-card p {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ========== Main Cases Section ========== */
+        .main-cases {
+            padding: 100px 0;
+            background: var(--color-bg);
+            position: relative;
+        }
+
+        .main-cases-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .main-cases-header .section-subtitle { margin: 0 auto; }
+
+        .main-case {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 40px;
+            border: 1px solid var(--color-border);
+        }
+
+        .main-case-banner {
+            padding: 40px 48px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-case-banner.bg-1 {
+            background: linear-gradient(135deg, #003F88 0%, #0066CC 50%, #1976D2 100%);
+        }
+
+        .main-case-banner.bg-2 {
+            background: linear-gradient(135deg, #1A237E 0%, #283593 50%, #3949AB 100%);
+        }
+
+        .main-case-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at right, rgba(255,255,255,0.1) 0%, transparent 60%);
+        }
+
+        .main-case-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .case-banner-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .case-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .main-case-banner h3 {
+            font-size: clamp(22px, 3vw, 30px);
+            font-weight: 800;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .main-case-banner .case-subtitle {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        .case-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .case-tag {
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .main-case-body {
+            padding: 48px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .case-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-bg);
+        }
+
+        .case-section h4 .step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--color-primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .case-section ul {
+            display: grid;
+            gap: 12px;
+        }
+
+        .case-section li {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .case-section li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--color-accent);
+        }
+
+        .case-section p {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+        }
+
+        .case-highlight {
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, rgba(217, 48, 37, 0.05), rgba(234, 88, 12, 0.05));
+            border-radius: 10px;
+            border: 1px solid rgba(217, 48, 37, 0.15);
+            font-size: 13px;
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        /* ========== Case Collection Section ========== */
+        .case-collection {
+            padding: 100px 0;
+            background: var(--color-surface);
+        }
+
+        .collection-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .collection-header .section-subtitle { margin: 0 auto; }
+
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: var(--color-surface-alt);
+            border: 1px solid var(--color-border);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--color-primary-light);
+            color: var(--color-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+        }
+
+        .filter-btn .count {
+            margin-left: 4px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .case-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .case-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            border: 1px solid var(--color-border);
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        /* ===== Case Card Logo Watermark ===== */
+        .case-card::before {
+            content: attr(data-logo);
+            position: absolute;
+            bottom: -16px;
+            right: -10px;
+            font-size: 92px;
+            font-weight: 900;
+            color: var(--logo-color, var(--color-primary));
+            opacity: 0.07;
+            letter-spacing: -4px;
+            pointer-events: none;
+            z-index: 0;
+            line-height: 1;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            white-space: nowrap;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .case-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: var(--logo-color, var(--color-primary));
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .case-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .case-card:hover::before {
+            opacity: 0.14;
+            transform: translateX(-4px) translateY(2px);
+        }
+
+        .case-card:hover::after {
+            opacity: 0.09;
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        .case-card[data-industry="bank"]    { --logo-color: #003F88; }
+        .case-card[data-industry="trust"]   { --logo-color: #7B1FA2; }
+        .case-card[data-industry="insurance"] { --logo-color: #2E7D32; }
+        .case-card[data-industry="securities"] { --logo-color: #E65100; }
+        .case-card[data-industry="other"]   { --logo-color: #455A64; }
+
+        .case-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-primary-light);
+        }
+
+        .case-card.hidden {
+            display: none;
+        }
+
+        .case-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .industry-tag {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .industry-tag.bank { background: #E3F2FD; color: #1565C0; }
+        .industry-tag.trust { background: #F3E5F5; color: #7B1FA2; }
+        .industry-tag.insurance { background: #E8F5E9; color: #2E7D32; }
+        .industry-tag.securities { background: #FFF3E0; color: #E65100; }
+        .industry-tag.other { background: #ECEFF1; color: #455A64; }
+
+        .case-year {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            font-weight: 600;
+        }
+
+        .case-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--color-text);
+            line-height: 1.5;
+        }
+
+        .case-card-customer {
+            font-size: 13px;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .case-card-desc {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            flex-grow: 1;
+            margin-bottom: 16px;
+        }
+
+        .case-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .case-card-tag {
+            padding: 3px 10px;
+            background: var(--color-surface-alt);
+            border-radius: 6px;
+            font-size: 11px;
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
+        /* ========== Footer ========== */
+        .footer {
+            background: #0A1929;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 64px 0 24px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-brand .logo-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 26px;
+        }
+
+        .footer-brand .logo-name {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.9;
+            margin-top: 20px;
+            max-width: 400px;
+        }
+
+        .footer-col h5 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            display: grid;
+            gap: 12px;
+        }
+
+        .footer-col li {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .footer-col li:hover { color: #fff; }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom a { color: rgba(255, 255, 255, 0.5); }
+        .footer-bottom a:hover { color: #fff; }
+
+        /* ========== Scroll Animation ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 968px) {
+            .nav { display: none; }
+            .menu-toggle { display: flex; }
+
+            .nav.mobile-open {
+                display: flex;
+                position: fixed;
+                top: var(--header-height);
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 32px 24px;
+                gap: 24px;
+                align-items: flex-start;
+                z-index: 999;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .methodology-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .advantage-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-case-body {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 32px 24px;
+            }
+
+            .main-case-banner {
+                padding: 32px 24px;
+            }
+
+            .case-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 0 16px; }
+            .header-inner { padding: 0 16px; }
+
+            .hero { padding-top: calc(var(--header-height) + 20px); }
+
+            .hero-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+                margin-top: 40px;
+            }
+
+            .about { padding: 60px 0; }
+            .about-card { padding: 32px 24px; }
+            .about-credentials { grid-template-columns: 1fr; }
+
+            .services { padding: 60px 0; }
+            .methodology { padding: 32px 20px; }
+
+            .advantages { padding: 60px 0; }
+            .advantage-grid { grid-template-columns: 1fr; }
+
+            .main-cases { padding: 60px 0; }
+            .main-case-body { padding: 24px 20px; }
+            .main-case-banner { padding: 28px 20px; }
+
+            .case-collection { padding: 60px 0; }
+            .case-cards { grid-template-columns: 1fr; }
+
+            .case-card::before {
+                font-size: 68px;
+                bottom: -10px;
+                right: -6px;
+                letter-spacing: -3px;
+            }
+
+            .case-card::after {
+                width: 120px;
+                height: 120px;
+            }
+
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer { padding: 48px 0 24px; }
+
+            .hero-actions { flex-direction: column; }
+            .hero-actions .btn-primary,
+            .hero-actions .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .filter-bar { gap: 8px; }
+            .filter-btn { padding: 6px 14px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== Header ========== -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#hero" class="logo">
+                <div class="logo-icon">安</div>
+                <div class="logo-text">
+                    <span class="logo-name">安恒信息</span>
+                    <span class="logo-en">DBAPPSecurity</span>
+                </div>
+            </a>
+            <nav class="nav" id="nav">
+                <a href="#services" class="nav-link">服务方案</a>
+                <a href="#advantages" class="nav-link">服务优势</a>
+                <a href="#main-cases" class="nav-link">标杆案例</a>
+                <a href="#case-collection" class="nav-link">案例集</a>
+                <a href="#services" class="nav-cta">咨询方案</a>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== Hero ========== -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    <span>金融行业网络安全 · 渗透测试服务方案</span>
+                </div>
+                <h1>金融级安全合规检测<br><span class="accent">AI驱动的渗透测试</span>解决方案</h1>
+                <p class="hero-desc">杭州安恒信息技术股份有限公司凭借十五年网络安全实战经验与前沿AI技术，为金融机构提供覆盖基础合规检测、个人信息保护、APP专项合规、数据安全合规的全方位渗透测试服务，助力金融行业从被动合规迈向主动防御。</p>
+                <div class="hero-actions">
+                    <a href="#main-cases" class="btn-primary">查看标杆案例 →</a>
+                    <a href="#services" class="btn-secondary">了解服务方案</a>
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <div class="hero-stat-num">15+</div>
+                        <div class="hero-stat-label">年安全实战经验</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-num">1500+</div>
+                        <div class="hero-stat-label">技术服务中心人员</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-num">29+</div>
+                        <div class="hero-stat-label">金融行业案例</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-num">0</div>
+                        <div class="hero-stat-label">重大活动安全事故</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== About Section ========== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content reveal">
+                    <div class="section-tag">关于安恒</div>
+                    <h2 class="section-title">国内领先的网络安全企业</h2>
+                    <p>杭州安恒信息技术股份有限公司（简称"安恒信息"）成立于2007年，是国内领先的网络安全产品与服务提供商。自2008年受邀参与北京奥运会核心安保工作至今，已积累了十五年重大活动网络安全保障实战经验，实现"零事故"的安全保障记录。</p>
+                    <p>安恒信息是杭州2022年第19届亚运会官方独家网络安全服务合作伙伴，拥有国家信息安全测评中心安全工程三级资质（最高级别认证），具备行业完备的高级网络安全服务资质。</p>
+                    <div class="about-credentials">
+                        <div class="credential-item">
+                            <div class="credential-icon">🏆</div>
+                            <div class="credential-text">安全工程三级资质<br>（最高级别）</div>
+                        </div>
+                        <div class="credential-item">
+                            <div class="credential-icon">🎯</div>
+                            <div class="credential-text">亚运会官方<br>网络安全合作伙伴</div>
+                        </div>
+                        <div class="credential-item">
+                            <div class="credential-icon">🔬</div>
+                            <div class="credential-text">十大前沿<br>安全实验室</div>
+                        </div>
+                        <div class="credential-item">
+                            <div class="credential-icon">👥</div>
+                            <div class="credential-text">九维安全<br>能力专家团队</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-card reveal">
+                    <h3>九维安全能力专家体系</h3>
+                    <p>安恒信息安全服务团队由九维安全能力专家构成，以体系化的安全人才及技术为客户赋能，覆盖从攻防对抗到运营管理的全链条安全能力。</p>
+                    <div class="about-features">
+                        <div class="about-feature"><div class="about-feature-icon">🔴</div><span>红队 — 持续突破，模拟真实攻击</span></div>
+                        <div class="about-feature"><div class="about-feature-icon">🟠</div><span>橙队 — 擅于赋能，提升安全能力</span></div>
+                        <div class="about-feature"><div class="about-feature-icon">🟡</div><span>黄队 — 致力建设，完善安全体系</span></div>
+                        <div class="about-feature"><div class="about-feature-icon">🟢</div><span>绿队 — 跟踪改进，持续优化防护</span></div>
+                        <div class="about-feature"><div class="about-feature-icon">🔵</div><span>青队 — 快速处置，应急响应保障</span></div>
+                        <div class="about-feature"><div class="about-feature-icon">🔷</div><span>蓝队 — 实时防御，全天候监控</span></div>
+                        <div class="about-feature"><div class="about-feature-icon">🟣</div><span>紫队 — 不断优化，攻防协同</span></div>
+                        <div class="about-feature"><div class="about-feature-icon">⚫</div><span>暗队 — 专注情报和安全研究</span></div>
+                        <div class="about-feature"><div class="about-feature-icon">⚪</div><span>白队 — 运营管理，统筹全局</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Service Plan Section ========== -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="services-header reveal">
+                <div class="section-tag" style="margin: 0 auto 16px;">服务方案</div>
+                <h2 class="section-title">四大核心合规检测服务</h2>
+                <p class="section-subtitle">基于金融行业相关法律法规与标准规范，安恒信息提供覆盖应用系统、个人信息、APP应用、数据安全的全方位合规检测服务，帮助金融机构获悉自身安全建设现状，满足监管法规要求。</p>
+            </div>
+
+            <div class="service-grid">
+                <!-- Service 1 -->
+                <div class="service-card reveal">
+                    <span class="service-num">01</span>
+                    <div class="service-icon bg-1">🛡️</div>
+                    <h3>基础合规检测服务</h3>
+                    <p>基于《网络安全法》《数据安全法》《个人信息保护法》等法律法规，通过人工渗透为主、漏洞扫描和安全基线核查为辅，对金融机构目标系统进行全面检测。</p>
+                    <ul class="service-list">
+                        <li>应用系统合规检测（APP、小程序、网站、客户端等）</li>
+                        <li>网络环境合规检测（防火墙、入侵检测、反病毒）</li>
+                        <li>安全运营合规检测（日志管理、漏洞管理、安全监控）</li>
+                        <li>管理制度合规检测（安全政策、管理机构、安全责任制）</li>
+                    </ul>
+                    <div class="service-output">📄 输出物：《基础合规检测报告》</div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card reveal">
+                    <span class="service-num">02</span>
+                    <div class="service-icon bg-2">🔒</div>
+                    <h3>个人信息保护合规检测服务</h3>
+                    <p>针对金融机构个人信息处理流程进行全面评估，从数据收集到销毁的全生命周期进行合规性检查，确保个人信息处理符合法规要求。</p>
+                    <ul class="service-list">
+                        <li>现状调研：商业流程、系统信息、个人信息处理流程</li>
+                        <li>数据映射分析：形成清晰的数据清单与映射图</li>
+                        <li>风险源识别：通过访谈、文档查验、功能检查及技术测试</li>
+                        <li>风险评级：按"个人权益影响"及"安全事件可能性"双维度评价</li>
+                    </ul>
+                    <div class="service-output">📄 输出物：《个人信息保护合规评估报告》</div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card reveal">
+                    <span class="service-num">03</span>
+                    <div class="service-icon bg-3">📱</div>
+                    <h3>APP专项个人信息安全合规检测</h3>
+                    <p>针对银行网银和手机银行等APP，依据央行及网信办、工信部相关规范，通过本地核查为主、行为监控与渗透测试为辅进行全面检测。</p>
+                    <ul class="service-list">
+                        <li>本地隐私政策合规检测：隐私政策文本与业务功能核验</li>
+                        <li>APP运行行为合规检测：真机运行+Hook技术遍历检测</li>
+                        <li>APP渗透测试合规检测：数据传输与存储安全措施评估</li>
+                        <li>个人信息权限代码声明列表验证</li>
+                    </ul>
+                    <div class="service-output">📄 输出物：《APP专项个人信息安全合规检测报告》</div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card reveal">
+                    <span class="service-num">04</span>
+                    <div class="service-icon bg-4">🗄️</div>
+                    <h3>数据安全合规检测服务</h3>
+                    <p>覆盖金融数据安全管理、金融数据安全保护、金融数据安全运维三大领域，依据《金融数据安全 数据安全分级指南》等标准进行检测。</p>
+                    <ul class="service-list">
+                        <li>金融数据分类分级：识别核心数据和重要数据</li>
+                        <li>金融数据流转合规：数据加工、传输过程安全检查</li>
+                        <li>3级及以上数据加工前安全评估</li>
+                        <li>通过渗透测试手段对数据流转加密措施进行合规检查</li>
+                    </ul>
+                    <div class="service-output">📄 输出物：《数据安全合规检测报告》</div>
+                </div>
+            </div>
+
+            <!-- Methodology -->
+            <div class="methodology reveal">
+                <h3 class="methodology-title">评估方法论：管理 + 技术 双层面覆盖</h3>
+                <div class="methodology-grid">
+                    <div class="methodology-col">
+                        <h4><span class="icon-circle">M</span>管理层面评估</h4>
+                        <div class="method-item">
+                            <h5>文档审核</h5>
+                            <p>收集并审查安全管理体系相关政策、制度、流程、操作手册等文件，评估完整性、合规性和有效性。</p>
+                        </div>
+                        <div class="method-item">
+                            <h5>问卷调查</h5>
+                            <p>编制并组织填写问卷，对客户网络安全保护状况进行统计和调查，获取机构情况及评估任务等基本信息。</p>
+                        </div>
+                        <div class="method-item">
+                            <h5>人工访谈</h5>
+                            <p>评估顾问与金融机构相关部门和人员进行深入访谈，了解合规实践执行情况，发现优势与劣势，提供精准改进建议。</p>
+                        </div>
+                    </div>
+                    <div class="methodology-col">
+                        <h4><span class="icon-circle">T</span>技术层面评估</h4>
+                        <div class="method-item">
+                            <h5>漏洞扫描</h5>
+                            <p>以本地扫描方式对系统和网络进行安全扫描，从内网和外网两个角度查找安全风险，覆盖系统层、网络层、应用层。</p>
+                        </div>
+                        <div class="method-item">
+                            <h5>渗透测试</h5>
+                            <p>模拟黑客攻击方法进行非破坏性攻击测试，流程包括：信息收集 → 弱点分析 → 获取权限 → 权限提升，以人工渗透为主、工具为辅。</p>
+                        </div>
+                        <div class="method-item">
+                            <h5>基线核查</h5>
+                            <p>针对服务器操作系统、数据库、中间件、应用系统，采用脚本工具或人工参照安全配置基线列表进行检查，排查安全弱点。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Advantages Section ========== -->
+    <section class="advantages" id="advantages">
+        <div class="container">
+            <div class="advantages-header reveal">
+                <div class="section-tag" style="margin: 0 auto 16px;">服务优势</div>
+                <h2 class="section-title">七大核心优势</h2>
+                <p class="section-subtitle">安恒信息安全服务拥有国内一流的安全专家团队、专业的自研安全服务工具、完备的高级网络安全服务资质，全生命周期覆盖网络安全建设的顶层设计到具体方案落地。</p>
+            </div>
+            <div class="advantage-grid">
+                <div class="advantage-card reveal">
+                    <div class="advantage-icon">👥</div>
+                    <h4>专业安全服务团队</h4>
+                    <p>全国技术服务中心1500人，均具备丰富实战经验与行业资格认证，满足不同规模客户服务需求。</p>
+                </div>
+                <div class="advantage-card reveal">
+                    <div class="advantage-icon">📋</div>
+                    <h4>标准服务流程制度</h4>
+                    <p>首批获得国家信息安全测评中心安全工程三级资质（最高级别），满足国家级标准化流程要求。</p>
+                </div>
+                <div class="advantage-card reveal">
+                    <div class="advantage-icon">🛠️</div>
+                    <h4>自研安全测试工具</h4>
+                    <p>自主研发明鉴系列扫描器、渗透测试平台、应急处置工具箱等，结合主流工具交叉测试。</p>
+                </div>
+                <div class="advantage-card reveal">
+                    <div class="advantage-icon">🏅</div>
+                    <h4>丰富活动重保经验</h4>
+                    <p>2008年奥运会核心安保至今15年实战，0事故，杭州亚运会官方独家网络安全服务伙伴。</p>
+                </div>
+                <div class="advantage-card reveal">
+                    <div class="advantage-icon">📜</div>
+                    <h4>完备安全服务资质</h4>
+                    <p>具备安全工程、风险评估、安全开发、安全培训、应急处理、安全集成等最高级别资质。</p>
+                </div>
+                <div class="advantage-card reveal">
+                    <div class="advantage-icon">🎯</div>
+                    <h4>九维能力专家</h4>
+                    <p>红、橙、黄、绿、青、蓝、紫、暗、白九支队伍，以体系化安全人才及技术为客户赋能。</p>
+                </div>
+                <div class="advantage-card reveal">
+                    <div class="advantage-icon">🔬</div>
+                    <h4>十大研究中心</h4>
+                    <p>卫兵、海特、分子、追猎、析安、AiLPHA大数据、星火、水滴、木牛、猎鹰十大实验室。</p>
+                </div>
+                <div class="advantage-card reveal">
+                    <div class="advantage-icon">🌐</div>
+                    <h4>全行业覆盖经验</h4>
+                    <p>服务覆盖银行、证券、保险、信托等各类金融机构，积累丰富的金融行业安全服务案例。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Main Cases Section ========== -->
+    <section class="main-cases" id="main-cases">
+        <div class="container">
+            <div class="main-cases-header reveal">
+                <div class="section-tag" style="margin: 0 auto 16px;">标杆案例</div>
+                <h2 class="section-title">金融行业渗透测试标杆案例</h2>
+                <p class="section-subtitle">精选两大标志性项目，展示安恒信息在AI驱动自动化渗透测试与传统信息系统渗透测试领域的深厚实力与创新突破。</p>
+            </div>
+
+            <!-- Main Case 1: 苏州农商行 -->
+            <div class="main-case reveal">
+                <div class="main-case-banner bg-1">
+                    <div class="case-banner-content">
+                        <span class="case-badge">★ 金融领域首例 · AI驱动</span>
+                        <h3>苏州农商行AI+自动化渗透测试项目</h3>
+                        <p class="case-subtitle">利用大语言模型注意力机制，对渗透过程进行仿真化处理，以拟人手法调用工具开展漏洞渗透任务，发现高级和隐蔽的漏洞信息，保障业务系统安全性。</p>
+                        <div class="case-tags">
+                            <span class="case-tag">AI大模型</span>
+                            <span class="case-tag">自动化渗透</span>
+                            <span class="case-tag">银行核心业务</span>
+                            <span class="case-tag">云端推理+本地执行</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-case-body">
+                    <div class="case-section">
+                        <h4><span class="step-num">1</span>需求分析</h4>
+                        <ul>
+                            <li>传统模式渗透测试面临"投入高、效果差、证明力不足"的困境</li>
+                            <li>银行信息系统规模随数字化转型持续扩张，核心业务系统与第三方组件集成愈发复杂</li>
+                            <li>传统人工渗透测试难以实现全量、高频的漏洞检测，无法适配银行复杂的网络安全态势</li>
+                            <li>线上金融、移动支付等业务高度依赖系统安全性与连续性</li>
+                        </ul>
+                        <div class="case-highlight">
+                            💡 客户背景：苏州农商行2004年改制组建，2019年更名并上市，全国第四家农商行，总资产2200亿，总存款1600亿。
+                        </div>
+                    </div>
+                    <div class="case-section">
+                        <h4><span class="step-num">2</span>解决方案</h4>
+                        <ul>
+                            <li>集成大模型技术，AI智能选择扫描、探测、注入、分析等工具链并自动执行</li>
+                            <li>构建"目标分析→策略规划→工具调用→结果研判→策略迭代"的自动化闭环</li>
+                            <li>通过AI探索能力，系统性探测测试人员可能忽略的攻击路径</li>
+                            <li>采用本地+云端组合模式（云端推理本地执行），最小化构建自动化渗透智能体</li>
+                            <li>模拟APT攻击、0day漏洞利用、业务逻辑篡改等实战化测试场景</li>
+                        </ul>
+                    </div>
+                    <div class="case-section">
+                        <h4><span class="step-num">3</span>方案价值</h4>
+                        <ul>
+                            <li><strong>提升漏洞管理能力：</strong>漏洞检测效率大幅提升，漏洞发现能力增强</li>
+                            <li><strong>增强持续防御能力：</strong>对核心业务系统安全控制措施进行穿透式检测，精准定位防护薄弱环节</li>
+                            <li><strong>实现智能决策支持：</strong>多维度提取漏洞类型、影响范围等特征，助力从被动响应转向主动风险管控</li>
+                            <li><strong>金融领域首例：</strong>AI与金融业务场景深度融合，具备较强的普适性</li>
+                        </ul>
+                        <div class="case-highlight">
+                            🏆 建设至今已开展多个系统测试，收效明显，展现了智能化技术在安全领域的科技创新潜力。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Case 2: 兴业银行 -->
+            <div class="main-case reveal">
+                <div class="main-case-banner bg-2">
+                    <div class="case-banner-content">
+                        <span class="case-badge">★ 一体化渗透服务 · 多平台覆盖</span>
+                        <h3>兴业银行信息系统渗透测试服务项目</h3>
+                        <p class="case-subtitle">为兴业银行提供渗透测试、漏洞扫描、API接口检测、移动客户端（Android/IOS/鸿蒙）检测分析及系统加固整改等一体化安全服务，解决新业务上线安全性检测需求。</p>
+                        <div class="case-tags">
+                            <span class="case-tag">渗透测试</span>
+                            <span class="case-tag">API检测</span>
+                            <span class="case-tag">多平台覆盖</span>
+                            <span class="case-tag">合规标准</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-case-body">
+                    <div class="case-section">
+                        <h4><span class="step-num">1</span>需求分析</h4>
+                        <ul>
+                            <li>兴业银行有众多业务系统更新上线，需保障银行信息系统安全</li>
+                            <li>需集中采购渗透测试服务，用于信息系统上线前渗透测试、定期渗透测试</li>
+                            <li>信息安全检查和安全应急响应等工作需要专业安全服务支撑</li>
+                            <li>需进一步巩固优化本行渗透测试成果</li>
+                        </ul>
+                        <div class="case-highlight">
+                            📋 行业背景：数字化转型浪潮下，银行对信息系统依赖程度越来越高，必须加强信息安全防护能力以保障业务连续性和稳定性。
+                        </div>
+                    </div>
+                    <div class="case-section">
+                        <h4><span class="step-num">2</span>解决方案</h4>
+                        <ul>
+                            <li>提供专业渗透测试与漏洞扫描服务</li>
+                            <li>对API接口进行全面安全检测分析</li>
+                            <li>移动客户端检测覆盖Android、IOS、鸿蒙三大平台</li>
+                            <li>系统加固整改等安全服务</li>
+                            <li>依据中国人民银行JR/T 0213-2021、JR/T 0232-2021标准规范</li>
+                        </ul>
+                        <div class="case-highlight">
+                            📐 依据标准：《金融网络安全Web应用服务安全测试通用规范》、《银行互联网渗透测试指南》
+                        </div>
+                    </div>
+                    <div class="case-section">
+                        <h4><span class="step-num">3</span>方案价值</h4>
+                        <ul>
+                            <li><strong>巩固渗透测试成果：</strong>引入专业团队和先进技术，发现前期可能遗漏的安全问题，提高渗透测试准确性和有效性</li>
+                            <li><strong>符合监管要求：</strong>满足监管机构对信息安全的合规要求，确保达到行业标准</li>
+                            <li><strong>避免监管处罚：</strong>定期渗透测试和安全检查，及时发现并整改不符合监管要求的问题</li>
+                            <li><strong>维护品牌声誉：</strong>避免因安全问题导致的监管处罚，维护银行良好形象</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Case Collection Section ========== -->
+    <section class="case-collection" id="case-collection">
+        <div class="container">
+            <div class="collection-header reveal">
+                <div class="section-tag" style="margin: 0 auto 16px;">案例集</div>
+                <h2 class="section-title">金融行业服务案例集</h2>
+                <p class="section-subtitle">覆盖银行、信托、保险、证券等金融细分领域，精选29+真实服务案例，展示安恒信息在金融行业的深度服务能力与广泛客户基础。</p>
+            </div>
+
+            <div class="filter-bar reveal">
+                <button class="filter-btn active" data-filter="all">全部<span class="count">(29)</span></button>
+                <button class="filter-btn" data-filter="bank">银行<span class="count">(13)</span></button>
+                <button class="filter-btn" data-filter="trust">信托<span class="count">(1)</span></button>
+                <button class="filter-btn" data-filter="insurance">保险<span class="count">(8)</span></button>
+                <button class="filter-btn" data-filter="securities">证券<span class="count">(5)</span></button>
+                <button class="filter-btn" data-filter="other">其他金融<span class="count">(2)</span></button>
+            </div>
+
+            <div class="case-cards" id="caseCards">
+                <!-- Bank Cases -->
+                <div class="case-card" data-logo="民生信用卡" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>中国民生银行信用卡中心</h4>
+                    <div class="case-card-customer">2021-2022年度渗透测试服务项目</div>
+                    <p class="case-card-desc">覆盖卡中心互联网应用系统（34个WEB应用、4个APP）及内网系统，包含信用卡中心门户、智能客服系统、全民生活APP等，驻场2人实施。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">WEB渗透</span>
+                        <span class="case-card-tag">APP测试</span>
+                        <span class="case-card-tag">内网渗透</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="进出口" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>中国进出口银行</h4>
+                    <div class="case-card-customer">IT系统联合开发项目测试实施与管理服务</div>
+                    <p class="case-card-desc">负责进出口银行IT系统联合开发项目的安全测试实施与质量管理，涵盖漏洞扫描、安全基线配置检测、内外网渗透测试及测试过程管理。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">安全测试</span>
+                        <span class="case-card-tag">基线检测</span>
+                        <span class="case-card-tag">质量管理</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="广东农信" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>广东省农村信用社联合社</h4>
+                    <div class="case-card-customer">安全保障服务项目</div>
+                    <p class="case-card-desc">提供渗透测试、安全咨询和培训、攻方演习（红队评估）服务，围绕广东农信现有网络架构展开打点与后渗透的安全评估。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">渗透测试</span>
+                        <span class="case-card-tag">红队评估</span>
+                        <span class="case-card-tag">安全咨询</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="吉林农信" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2022</span>
+                    </div>
+                    <h4>吉林省农村信用社联合社</h4>
+                    <div class="case-card-customer">2022年外部安全保障服务项目</div>
+                    <p class="case-card-desc">涵盖主防服务、网络架构安全评估、资产梳理、安全漏洞扫描、基线核查、WEB/APP渗透测试、安全加固、二十大会议重保等全方位安全保障。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">主防服务</span>
+                        <span class="case-card-tag">资产梳理</span>
+                        <span class="case-card-tag">重保值守</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="招商银行" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>招商银行</h4>
+                    <div class="case-card-customer">IT类项目驻场服务</div>
+                    <p class="case-card-desc">提供定期漏洞检测、漏洞跟踪处理、督促漏洞整改、扫描结果验证、上线前安全测试等服务，并自主整合开发漏洞管理平台对接总行运维系统。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">漏洞管理</span>
+                        <span class="case-card-tag">驻场服务</span>
+                        <span class="case-card-tag">上线前测试</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="四川银行" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2022</span>
+                    </div>
+                    <h4>四川银行</h4>
+                    <div class="case-card-customer">2022年度互联网系统应用安全服务</div>
+                    <p class="case-card-desc">提供Web应用系统渗透测试、APP应用程序渗透测试及监管专项检查服务，覆盖门户、网银、直销银行、手机银行等互联网系统。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">WEB渗透</span>
+                        <span class="case-card-tag">APP渗透</span>
+                        <span class="case-card-tag">监管检查</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="顺德农商" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2022</span>
+                    </div>
+                    <h4>顺德农商银行</h4>
+                    <div class="case-card-customer">重要时期安全保障服务项目</div>
+                    <p class="case-card-desc">提供北京冬奥会/冬残奥会7*24现场值守、安防网/供应链/手机银行/移动信贷等多系统渗透测试及互联网资产核查服务。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">重保值守</span>
+                        <span class="case-card-tag">多系统渗透</span>
+                        <span class="case-card-tag">资产核查</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="民生信用卡" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2022</span>
+                    </div>
+                    <h4>中国民生银行信用卡中心</h4>
+                    <div class="case-card-customer">渗透测试服务开发项目</div>
+                    <p class="case-card-desc">提供互联网系统渗透测试、移动端安全测试、内网渗透、安全通告服务、安全培训服务、重保期间网站监测服务，连续3年续签。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">互联网渗透</span>
+                        <span class="case-card-tag">移动端测试</span>
+                        <span class="case-card-tag">安全监测</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="建设银行" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2024</span>
+                    </div>
+                    <h4>中国建设银行</h4>
+                    <div class="case-card-customer">常规版本安全测试服务</div>
+                    <p class="case-card-desc">完成安全测试工具链建设与咨询服务，提供移动应用安全渗透专项测试，覆盖web应用、APP、小程序、微应用等，支持SDL安全开发流程。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">工具链建设</span>
+                        <span class="case-card-tag">移动安全</span>
+                        <span class="case-card-tag">SDL流程</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="建设银行" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2024</span>
+                    </div>
+                    <h4>中国建设银行</h4>
+                    <div class="case-card-customer">2024-2025全行互联网应用渗透测试</div>
+                    <p class="case-card-desc">远程渗透测试服务覆盖建设银行所属互联网IP地址段内所有设备、系统和应用（含APP），针对网络、系统、应用、业务流程等层面制定测试方案。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">远程渗透</span>
+                        <span class="case-card-tag">全行覆盖</span>
+                        <span class="case-card-tag">互联网资产</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="农业银行" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2024</span>
+                    </div>
+                    <h4>中国农业银行</h4>
+                    <div class="case-card-customer">全行应用安全测试外协服务</div>
+                    <p class="case-card-desc">框架项目，包含全国软件研发中心、数据中心、一级分行所有互联网系统的渗透测试，共三家公司承担10000人天工作量。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">全行渗透</span>
+                        <span class="case-card-tag">框架服务</span>
+                        <span class="case-card-tag">10000人天</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="长城华西" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2024</span>
+                    </div>
+                    <h4>长城华西银行</h4>
+                    <div class="case-card-customer">2023年重要基础设施和信息系统全面安全测评</div>
+                    <p class="case-card-desc">通过安全评估和信息系统渗透测试服务，提高重要信息系统安全保障水平，充分识别各类潜在安全风险，完善信息安全管控措施。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">安全测评</span>
+                        <span class="case-card-tag">风险识别</span>
+                        <span class="case-card-tag">监管合规</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="雅安商行" data-industry="bank">
+                    <div class="case-card-header">
+                        <span class="industry-tag bank">银行</span>
+                        <span class="case-year">2024</span>
+                    </div>
+                    <h4>雅安市商业银行</h4>
+                    <div class="case-card-customer">2024年网络和数据安全风险排查项目</div>
+                    <p class="case-card-desc">提供渗透测试/红队评估、源代码安全检测、第三方组件安全检测（SCA），按照四川金融监管局要求开展风险隐患排查。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">红队评估</span>
+                        <span class="case-card-tag">源代码审计</span>
+                        <span class="case-card-tag">SCA检测</span>
+                    </div>
+                </div>
+
+                <!-- Trust Cases -->
+                <div class="case-card" data-logo="国投泰康" data-industry="trust">
+                    <div class="case-card-header">
+                        <span class="industry-tag trust">信托</span>
+                        <span class="case-year">2023</span>
+                    </div>
+                    <h4>国投泰康信托</h4>
+                    <div class="case-card-customer">技术人力服务外包资源池网络安全领域服务</div>
+                    <p class="case-card-desc">提供驻场安全运维服务及常规安全服务，包括渗透测试、攻击演练、安全基线检查、漏洞扫描、7*24小时现场值守及网络和数据安全培训。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">驻场运维</span>
+                        <span class="case-card-tag">渗透测试</span>
+                        <span class="case-card-tag">安全培训</span>
+                    </div>
+                </div>
+
+                <!-- Insurance Cases -->
+                <div class="case-card" data-logo="人保健康" data-industry="insurance">
+                    <div class="case-card-header">
+                        <span class="industry-tag insurance">保险</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>中国人民健康保险</h4>
+                    <div class="case-card-customer">2021年网络安全运维服务项目</div>
+                    <p class="case-card-desc">提供互联网系统攻击溯源、专项渗透测试、安全设备策略管理、应用系统安全优化、应急响应、APP安全检测加固等全方位安全运维服务。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">攻击溯源</span>
+                        <span class="case-card-tag">渗透测试</span>
+                        <span class="case-card-tag">APP加固</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="大家保险" data-industry="insurance">
+                    <div class="case-card-header">
+                        <span class="industry-tag insurance">保险</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>大家保险集团</h4>
+                    <div class="case-card-customer">2020年安全服务项目</div>
+                    <p class="case-card-desc">框架服务模式，提供渗透测试、应急响应、重保驻场、安全培训、攻防演练、APP检测加固、HW保障、风险评估、0day通告、7*24监控等。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">框架服务</span>
+                        <span class="case-card-tag">HW保障</span>
+                        <span class="case-card-tag">攻防演练</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="银保信" data-industry="insurance">
+                    <div class="case-card-header">
+                        <span class="industry-tag insurance">保险</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>中国银保信</h4>
+                    <div class="case-card-customer">网络安全专项行动服务（安全服务类）</div>
+                    <p class="case-card-desc">因网络安全专项行动保障采购安全服务人员，提供安全监控、应急处置、攻击溯源、渗透测试四类服务，支撑2021年攻防演练行动。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">安全监控</span>
+                        <span class="case-card-tag">攻击溯源</span>
+                        <span class="case-card-tag">攻防演练</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="招商信诺" data-industry="insurance">
+                    <div class="case-card-header">
+                        <span class="industry-tag insurance">保险</span>
+                        <span class="case-year">2022</span>
+                    </div>
+                    <h4>招商信诺人寿保险</h4>
+                    <div class="case-card-customer">安全治理服务框架采购项目</div>
+                    <p class="case-card-desc">提供攻击路径梳理、互联网资产梳理、攻防对抗工作流程梳理、应急响应治理、安全系统策略优化、溯源反制培训、攻防对抗演练、渗透测试及驻场防守服务。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">攻击路径梳理</span>
+                        <span class="case-card-tag">渗透测试</span>
+                        <span class="case-card-tag">驻场防守</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="太平洋" data-industry="insurance">
+                    <div class="case-card-header">
+                        <span class="industry-tag insurance">保险</span>
+                        <span class="case-year">2022</span>
+                    </div>
+                    <h4>中国太平洋保险（集团）</h4>
+                    <div class="case-card-customer">渗透测试驻场服务</div>
+                    <p class="case-card-desc">驻场渗透测试，通过工具与人工测试分析手段模拟黑客入侵方式对目标系统进行测试，识别安全风险并给出解决方案，梯队式培养渗透测试人员。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">驻场渗透</span>
+                        <span class="case-card-tag">灰盒测试</span>
+                        <span class="case-card-tag">资源池</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="中再保险" data-industry="insurance">
+                    <div class="case-card-header">
+                        <span class="industry-tag insurance">保险</span>
+                        <span class="case-year">2023</span>
+                    </div>
+                    <h4>中国农业再保险</h4>
+                    <div class="case-card-customer">2023年度网络安全服务项目</div>
+                    <p class="case-card-desc">提供重要时期网络安全保障支持、渗透测试（30次系统/模块）、安全运营支持（驻场+资质证书）、网络安全攻防预演练及演练防守支持服务。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">重保支持</span>
+                        <span class="case-card-tag">渗透测试</span>
+                        <span class="case-card-tag">攻防演练</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="国寿海外" data-industry="insurance">
+                    <div class="case-card-header">
+                        <span class="industry-tag insurance">保险</span>
+                        <span class="case-year">2023</span>
+                    </div>
+                    <h4>中国人寿保险（海外）</h4>
+                    <div class="case-card-customer">2023-2025年常规网络安全技术服务</div>
+                    <p class="case-card-desc">提供重要时期保障驻场、渗透测试、风险评估、网站监控、应急响应、应急演练、漏洞预警、安全培训等综合网络安全技术服务。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">综合服务</span>
+                        <span class="case-card-tag">驻场保障</span>
+                        <span class="case-card-tag">风险评估</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="人保健康" data-industry="insurance">
+                    <div class="case-card-header">
+                        <span class="industry-tag insurance">保险</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>中国人民健康保险</h4>
+                    <div class="case-card-customer">2021年网络安全运维服务</div>
+                    <p class="case-card-desc">提供攻击溯源、专项渗透测试、安全设备策略管理、应用安全优化、应急响应、配置核查、安全基线优化、重要时期保障、安全监测预警等全栈服务。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">全栈运维</span>
+                        <span class="case-card-tag">攻击溯源</span>
+                        <span class="case-card-tag">应急响应</span>
+                    </div>
+                </div>
+
+                <!-- Securities Cases -->
+                <div class="case-card" data-logo="上交所" data-industry="securities">
+                    <div class="case-card-header">
+                        <span class="industry-tag securities">证券</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>上海证券交易所</h4>
+                    <div class="case-card-customer">2021年安全测试服务项目</div>
+                    <p class="case-card-desc">提供日常安全测试、季度资产排查、日常安全监测、安全测试交叉验证、灰盒安全扫描软件采购、漏扫软件扩容等服务，保障证券交易市场正常运作。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">安全测试</span>
+                        <span class="case-card-tag">资产排查</span>
+                        <span class="case-card-tag">安全监测</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="广发证券" data-industry="securities">
+                    <div class="case-card-header">
+                        <span class="industry-tag securities">证券</span>
+                        <span class="case-year">2021</span>
+                    </div>
+                    <h4>广发证券</h4>
+                    <div class="case-card-customer">2021国家护网项目安全专家驻场服务</div>
+                    <p class="case-card-desc">提供护网防守服务（准备、防护强化、预演、正式演练、总结五阶段），建党100周年互联网网站安全监控及APP渗透测试，达成HW成绩行业第一。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">HW主防</span>
+                        <span class="case-card-tag">网站监控</span>
+                        <span class="case-card-tag">APP渗透</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="银河证券" data-industry="securities">
+                    <div class="case-card-header">
+                        <span class="industry-tag securities">证券</span>
+                        <span class="case-year">2023</span>
+                    </div>
+                    <h4>中国银河证券</h4>
+                    <div class="case-card-customer">2023年互联网业务系统安全渗透测试</div>
+                    <p class="case-card-desc">对所有运行在互联网侧的信息系统进行渗透测试，确保覆盖29个互联网信息系统并单独出具测试报告，连续3年合同续签。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">互联网渗透</span>
+                        <span class="case-card-tag">29个系统</span>
+                        <span class="case-card-tag">连续续签</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="中证信息" data-industry="securities">
+                    <div class="case-card-header">
+                        <span class="industry-tag securities">证券</span>
+                        <span class="case-year">2023</span>
+                    </div>
+                    <h4>中证信息技术服务</h4>
+                    <div class="case-card-customer">智慧监管平台网络安全重保支撑服务</div>
+                    <p class="case-card-desc">提供演练组织服务、信息资产梳理、安全风险评估、安全整改加固、内网渗透测试及演练期间现场值守等防守方技术服务。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">重保支撑</span>
+                        <span class="case-card-tag">资产梳理</span>
+                        <span class="case-card-tag">内网渗透</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="上交所" data-industry="securities">
+                    <div class="case-card-header">
+                        <span class="industry-tag securities">证券</span>
+                        <span class="case-year">2023</span>
+                    </div>
+                    <h4>上海证券交易所</h4>
+                    <div class="case-card-customer">安全测试服务项目</div>
+                    <p class="case-card-desc">提供日常安全测试、日常代码审计、季度漏扫渗透实施、季度内网渗透等服务，从开发层面发现风险点并配合安全测试发现系统漏洞。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">代码审计</span>
+                        <span class="case-card-tag">季度漏扫</span>
+                        <span class="case-card-tag">内网渗透</span>
+                    </div>
+                </div>
+
+                <!-- Other Financial Cases -->
+                <div class="case-card" data-logo="国开金融" data-industry="other">
+                    <div class="case-card-header">
+                        <span class="industry-tag other">其他金融</span>
+                        <span class="case-year">2020</span>
+                    </div>
+                    <h4>国开金融</h4>
+                    <div class="case-card-customer">网络安全攻防演练2020信息安全专项保障</div>
+                    <p class="case-card-desc">覆盖战前准备、攻防实战、战后复盘三阶段，提供漏洞扫描、渗透测试、安全意识培训、资产梳理、主机/网络/应用风险排查及对抗演习。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">攻防演练</span>
+                        <span class="case-card-tag">风险排查</span>
+                        <span class="case-card-tag">对抗演习</span>
+                    </div>
+                </div>
+
+                <div class="case-card" data-logo="中银商务" data-industry="other">
+                    <div class="case-card-header">
+                        <span class="industry-tag other">其他金融</span>
+                        <span class="case-year">2023</span>
+                    </div>
+                    <h4>中银金融商务</h4>
+                    <div class="case-card-customer">2023-2024年信息安全服务框架协议</div>
+                    <p class="case-card-desc">框架服务模式，提供信息安全评估（渗透测试、回归测试、威胁情报）、信息安全加固、信息安全应急、信息安全培训及演练四大类服务。</p>
+                    <div class="case-card-tags">
+                        <span class="case-card-tag">框架服务</span>
+                        <span class="case-card-tag">安全评估</span>
+                        <span class="case-card-tag">应急响应</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== Footer ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">安</div>
+                        <div class="logo-text">
+                            <span class="logo-name">安恒信息</span>
+                            <span class="logo-en">DBAPPSecurity</span>
+                        </div>
+                    </div>
+                    <p>杭州安恒信息技术股份有限公司（股票代码：688023）成立于2007年，是国内领先的网络安全产品与服务提供商。秉承"安全为本，恒念为道"的理念，为政府、金融、能源、教育等行业客户提供全方位网络安全产品与安全服务。</p>
+                </div>
+                <div class="footer-col">
+                    <h5>服务方案</h5>
+                    <ul>
+                        <li>基础合规检测服务</li>
+                        <li>个人信息保护合规检测</li>
+                        <li>APP专项合规检测</li>
+                        <li>数据安全合规检测</li>
+                        <li>渗透测试服务</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>行业案例</h5>
+                    <ul>
+                        <li>银行行业案例</li>
+                        <li>证券行业案例</li>
+                        <li>保险行业案例</li>
+                        <li>信托行业案例</li>
+                        <li>其他金融机构</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>关于我们</h5>
+                    <ul>
+                        <li>公司简介</li>
+                        <li>资质荣誉</li>
+                        <li>安全服务团队</li>
+                        <li>十大研究中心</li>
+                        <li>联系我们</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2024 杭州安恒信息技术股份有限公司 版权所有</span>
+                <span>股票代码：688023 | 浙ICP备XXXXXX号</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========== Header Scroll Effect ==========
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // ========== Mobile Menu Toggle ==========
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.getElementById('nav');
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            nav.classList.toggle('mobile-open');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                nav.classList.remove('mobile-open');
+            });
+        });
+
+        // ========== Case Filter ==========
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const caseCards = document.querySelectorAll('.case-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+                caseCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.industry === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // ========== Scroll Reveal Animation ==========
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // ========== Smooth Scroll for Anchor Links ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 70;
+                    const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerOffset;
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
